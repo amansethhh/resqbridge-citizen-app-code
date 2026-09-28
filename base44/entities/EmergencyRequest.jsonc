@@ -1,0 +1,194 @@
+{
+  "name": "EmergencyRequest",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "medical",
+        "accident",
+        "unconscious",
+        "breathing",
+        "chest_pain",
+        "other"
+      ]
+    },
+    "patient_condition": {
+      "type": "string",
+      "enum": [
+        "conscious",
+        "semi_conscious",
+        "unconscious"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "mild",
+        "moderate",
+        "severe",
+        "life_threatening"
+      ]
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "additional_notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "details_completed",
+        "evidence_collected",
+        "location_confirmed",
+        "awaiting_confirmation",
+        "confirmed",
+        "active",
+        "ambulance_assigned",
+        "en_route",
+        "arrived",
+        "handover",
+        "completed",
+        "cancelled"
+      ],
+      "default": "draft"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "audio",
+              "note"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size_kb": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ai_analysis": {
+      "type": "object",
+      "properties": {
+        "detected_objects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "scene_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "estimated_severity": {
+          "type": "string"
+        },
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "processing",
+            "success",
+            "partial",
+            "unavailable",
+            "error"
+          ]
+        }
+      }
+    },
+    "ai_summary": {
+      "type": "string"
+    },
+    "location_lat": {
+      "type": "number"
+    },
+    "location_lng": {
+      "type": "number"
+    },
+    "location_accuracy": {
+      "type": "number"
+    },
+    "hospital_id": {
+      "type": "string"
+    },
+    "hospital_name": {
+      "type": "string"
+    },
+    "ambulance_code": {
+      "type": "string"
+    },
+    "ambulance_driver": {
+      "type": "string"
+    },
+    "ambulance_phone": {
+      "type": "string"
+    },
+    "ambulance_eta_min": {
+      "type": "number"
+    },
+    "family_notified": {
+      "type": "boolean",
+      "default": false
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "feedback_rating": {
+      "type": "number"
+    },
+    "feedback_text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

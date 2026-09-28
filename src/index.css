@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "leaflet/dist/leaflet.css";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --font-heading: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --rq-primary: 217 89% 48%;
+    --rq-primary-dark: 224 76% 32%;
+    --rq-cyan: 195 88% 56%;
+    --rq-red: 355 78% 56%;
+    --rq-red-dark: 355 74% 46%;
+    --rq-success: 142 69% 42%;
+    --rq-warning: 38 92% 55%;
+    --rq-navy: 222 47% 18%;
+    --rq-surface: 210 60% 98%;
+    --rq-muted: 215 20% 55%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* ResQBridge dark-mode token overrides — keep accents, lighten text/surfaces. */
+    --rq-navy: 210 30% 92%;
+    --rq-muted: 215 18% 66%;
+    --rq-surface: 222 34% 14%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+}
+
+@layer components {
+  /* Canonical glass surface — default. Used by GlassCard and chrome. */
+  .rq-glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 10px 30px -12px rgba(34, 76, 158, 0.22),
+      0 2px 8px -4px rgba(34, 76, 158, 0.10),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.65);
+  }
+  /* Stronger, more opaque glass for modals / sheets / emergency panels. */
+  .rq-glass-strong {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+      0 18px 48px -16px rgba(34, 76, 158, 0.28),
+      0 4px 12px -6px rgba(34, 76, 158, 0.12),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.75);
+  }
+  /* Subtle glass for nested / inline surfaces (badges, chips, list rows). */
+  .rq-glass-subtle {
+    background: rgba(255, 255, 255, 0.42);
+    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 4px 14px -8px rgba(34, 76, 158, 0.14);
+  }
+  /* Emergency-tinted glass for SOS / critical status panels. */
+  .rq-glass-danger {
+    background: rgba(255, 246, 246, 0.66);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(230, 60, 60, 0.28);
+    box-shadow:
+      0 12px 34px -14px rgba(214, 40, 40, 0.30),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  }
+  /* Atmospheric app background — soft, calm, non-competing. */
+  .rq-bg-gradient {
+    background:
+      radial-gradient(120% 70% at 50% -8%, rgba(56, 142, 255, 0.12) 0%, rgba(56, 142, 255, 0) 55%),
+      radial-gradient(90% 55% at 100% 0%, rgba(0, 196, 220, 0.09) 0%, rgba(0, 196, 220, 0) 50%),
+      radial-gradient(80% 50% at 0% 100%, rgba(120, 170, 255, 0.07) 0%, rgba(120, 170, 255, 0) 55%),
+      linear-gradient(180deg, hsl(210 68% 98%) 0%, hsl(206 78% 96%) 60%, hsl(202 82% 95%) 100%);
+  }
+
+  /* Level 3 — Primary CTA: blue→cyan gradient with 3D depth. */
+  .rq-btn-primary {
+    background-image: linear-gradient(to right, hsl(var(--rq-primary)), hsl(var(--rq-cyan)));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -3px 8px rgba(20,60,130,0.25), 0 8px 20px -8px rgba(29,111,232,0.55);
+  }
+  .rq-btn-primary:active { box-shadow: inset 0 4px 10px rgba(20,60,130,0.4), 0 2px 8px -4px rgba(29,111,232,0.4); }
+
+  /* Level 3 — Danger CTA: red 3D depth (simpler than the SOS control). */
+  .rq-btn-danger {
+    background-image: linear-gradient(to bottom, hsl(var(--rq-red)), hsl(var(--rq-red-dark)));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -3px 8px rgba(120,10,10,0.3), 0 8px 20px -8px rgba(226,54,54,0.5);
+  }
+  .rq-btn-danger:active { box-shadow: inset 0 4px 10px rgba(120,10,10,0.45), 0 2px 8px -4px rgba(226,54,54,0.4); }
+
+  /* Level 3 — Success CTA: green 3D depth. */
+  .rq-btn-success {
+    background-image: linear-gradient(to bottom, hsl(var(--rq-success)), hsl(142 69% 36%));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -3px 8px rgba(10,90,40,0.25), 0 8px 20px -8px rgba(34,160,90,0.45);
+  }
+  .rq-btn-success:active { box-shadow: inset 0 4px 10px rgba(10,90,40,0.4); }
+
+  /* Level 2 — Frosted glass button. */
+  .rq-btn-glass {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 16px -10px rgba(34,76,158,0.25);
+  }
+  .rq-btn-glass:active { box-shadow: inset 0 2px 6px rgba(34,76,158,0.18); }
+
+  /* Premium glass icon container (squircle) with inner highlight. */
+  .rq-icon-badge {
+    background: linear-gradient(160deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.38) 100%);
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 12px -6px rgba(34,76,158,0.2);
+  }
+
+  /* ---- Dark-mode surfaces ---- */
+  .dark .rq-glass {
+    background: rgba(30, 41, 59, 0.55);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,0.55), inset 0 1px 0 0 rgba(255,255,255,0.08);
+  }
+  .dark .rq-glass-strong {
+    background: rgba(28, 38, 56, 0.82);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: 0 18px 48px -16px rgba(0,0,0,0.6), inset 0 1px 0 0 rgba(255,255,255,0.1);
+  }
+  .dark .rq-glass-subtle {
+    background: rgba(38, 50, 71, 0.42);
+    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    box-shadow: 0 4px 14px -8px rgba(0,0,0,0.45);
+  }
+  .dark .rq-glass-danger {
+    background: rgba(60, 28, 30, 0.6);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(226, 80, 80, 0.32);
+    box-shadow: 0 12px 34px -14px rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.08);
+  }
+  .dark .rq-bg-gradient {
+    background:
+      radial-gradient(120% 70% at 50% -8%, rgba(56, 142, 255, 0.18) 0%, rgba(56, 142, 255, 0) 55%),
+      radial-gradient(90% 55% at 100% 0%, rgba(0, 196, 220, 0.12) 0%, rgba(0, 196, 220, 0) 50%),
+      radial-gradient(80% 50% at 0% 100%, rgba(120, 170, 255, 0.10) 0%, rgba(120, 170, 255, 0) 55%),
+      linear-gradient(180deg, hsl(222 47% 14%) 0%, hsl(224 60% 10%) 60%, hsl(220 50% 8%) 100%);
+  }
+  .dark .rq-btn-glass {
+    background: rgba(51, 65, 85, 0.55);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 6px 16px -10px rgba(0,0,0,0.5);
+  }
+  .dark .rq-icon-badge {
+    background: linear-gradient(160deg, rgba(51,65,85,0.7) 0%, rgba(30,41,59,0.5) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 4px 12px -6px rgba(0,0,0,0.45);
+  }
+}
+
+@layer utilities {
+  @keyframes rq-pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(226, 54, 54, 0.45); }
+    70% { box-shadow: 0 0 0 22px rgba(226, 54, 54, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(226, 54, 54, 0); }
+  }
+  .rq-pulse {
+    animation: rq-pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes rq-wave {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1); }
+  }
+  .rq-wave-bar {
+    animation: rq-wave 1s ease-in-out infinite;
+  }
+  /* Mobile safe-area helpers. */
+  .rq-safe-top { padding-top: env(safe-area-inset-top); }
+  .rq-safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .rq-min-safe-bottom { min-height: calc(100vh - env(safe-area-inset-bottom)); }
+  /* Premium soft shadow used by elevated glass elements. */
+  .rq-shadow-float { box-shadow: 0 14px 40px -16px rgba(34, 76, 158, 0.28); }
+  .rq-text-balance { text-wrap: balance; }
+  /* Content bottom padding that clears the iOS home indicator / Android gesture bar. */
+  .rq-content-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 2.5rem); }
+
+  /* Dark-mode overrides for literal white surfaces/borders used on inputs,
+     chips and selectable boxes — preserves light mode exactly. */
+  .dark .bg-white\/60,
+  .dark .bg-white\/70 { background-color: hsl(var(--card) / 0.6); }
+  .dark .border-white\/60,
+  .dark .border-white\/70 { border-color: hsl(var(--border) / 0.45); }
+
+  /* Screen entrance — calm fade + slight rise on mount. */
+  @keyframes rq-screen-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rq-screen-enter { animation: rq-screen-enter 260ms ease-out both; }
+
+  /* Optional subtle rise for hero/entry elements. */
+  @keyframes rq-rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rq-rise { animation: rq-rise 320ms ease-out both; }
+
+  /* Controlled emergency glow for the SOS halo — gentle, not aggressive. */
+  @keyframes rq-sos-glow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+  .rq-sos-pulse { animation: rq-sos-glow 2.4s ease-in-out infinite; }
+}
+
+/* Respect reduced-motion preferences across the app. */
+@media (prefers-reduced-motion: reduce) {
+  .rq-pulse,
+  .rq-sos-pulse,
+  .rq-wave-bar,
+  .rq-screen-enter,
+  .rq-rise {
+    animation: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}

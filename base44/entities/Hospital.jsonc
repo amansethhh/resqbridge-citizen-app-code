@@ -1,0 +1,46 @@
+{
+  "name": "Hospital",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "distance_km": {
+      "type": "number"
+    },
+    "eta_min": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "emergency_ready",
+        "high_load"
+      ]
+    },
+    "phone": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "name",
+    "address",
+    "lat",
+    "lng"
+  ]
+}

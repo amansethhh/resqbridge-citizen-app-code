@@ -1,0 +1,26 @@
+{
+  "name": "FamilyContact",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "relation": {
+      "type": "string"
+    },
+    "notified": {
+      "type": "boolean",
+      "default": false
+    },
+    "notified_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "phone"
+  ]
+}

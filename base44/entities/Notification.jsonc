@@ -1,0 +1,33 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "emergency",
+        "tracking",
+        "family",
+        "system"
+      ]
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "related_emergency_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "message",
+    "category"
+  ]
+}
